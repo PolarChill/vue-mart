@@ -8,11 +8,15 @@
 <script>
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'
-
 export default {
   name: 'home',
   components: {
     HelloWorld
-  }
+  },
+  async created () {
+    const res = await this.$http.get('/api/goods');
+    console.log(res)
+  },
+  
 }
 </script>
