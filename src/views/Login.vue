@@ -58,15 +58,22 @@ export default {
     async submitHandler(e) {
       e.preventDefault();
       console.log("submit", e);
-      const res = await this.$http.get("/api/login", {
-        params: {...this.model}
+      // post请求
+      const res = await this.$http.post("/api/login", {
+        // ...this.model
+        username: this.model.username,
+        password:this.model.password
       });
+      // get 请求
+      //   const res = await this.$http.get("/api/login", {
+      //     params: {...this.model}
+      //   });
       console.log(res);
       const { code, token, message } = res.data;
       if (code === 0) {
         localStorage.setItem("token", token);
         this.$store.commit("setToken", token);
-        const { redirect } = this.$route.query || "/";
+        const redirect = this.$route.query.redirect || "/";
         this.$router.push(redirect);
       } else {
         // 登录失败
